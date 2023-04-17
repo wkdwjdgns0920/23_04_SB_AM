@@ -2,13 +2,16 @@ package com.KoreaIT.jjh.demo.repository;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import com.KoreaIT.jjh.demo.vo.Member;
 
 @Mapper
 public interface MemberRepository {
 
 	@Insert("""
 			INSERT INTO `member`
-			SET regDate = NOW(),
+			set regDate = NOW(),
 			updateDate = NOW(),
 			loginId = #{loginId},
 			loginPw = #{loginPw},
@@ -18,5 +21,17 @@ public interface MemberRepository {
 			email = #{email}
 			""")
 	void join(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email);
+
+	@Select("""
+			SELECT *
+			FROM `member`
+			WHERE id = #{id}
+			""")
+	Member getMemberById(int id);
+
+	@Select("""
+			SELECT LAST_INSERT_ID()
+			""")
+	int getLastInsertId();
 
 }
