@@ -15,5 +15,5 @@ public class Member {
 	private String nickname;
 	private String cellphoneNum;
 	private String email;
-
+//	private String birth;
 }
