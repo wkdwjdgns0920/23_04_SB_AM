@@ -11,7 +11,7 @@ public interface MemberRepository {
 
 	@Insert("""
 			INSERT INTO `member`
-			set regDate = NOW(),
+			SET regDate = NOW(),
 			updateDate = NOW(),
 			loginId = #{loginId},
 			loginPw = #{loginPw},
@@ -40,5 +40,13 @@ public interface MemberRepository {
 			WHERE loginId = #{loginId}
 			""")
 	Member getMemberByLoginId(String loginId);
+
+	@Select("""
+			SELECT *
+			FROM `member`
+			WHERE name = #{name}
+			AND email = #{email}
+			""")
+	Member getMemberByNameAndEmail(String name, String email);
 
 }
