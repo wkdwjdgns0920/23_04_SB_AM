@@ -11,7 +11,6 @@ import com.KoreaIT.jjh.demo.service.ArticleService;
 import com.KoreaIT.jjh.demo.util.Ut;
 import com.KoreaIT.jjh.demo.vo.Article;
 import com.KoreaIT.jjh.demo.vo.ResultData;
-import com.fasterxml.jackson.core.type.WritableTypeId;
 
 @Controller
 public class UsrArticleController {
@@ -69,7 +68,7 @@ public class UsrArticleController {
 	@ResponseBody
 	public ResultData getArticles() {
 		List<Article> articles = articleService.articles();
-		
+
 		return ResultData.from("S-1", "Article List", articles);
 	}
 
