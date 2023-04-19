@@ -55,8 +55,9 @@ public class ArticleService {
 		return ResultData.from("S-1", Ut.f("%d번 글을 수정 했습니다", id), "article", article);
 	}
 
-	public List<Article> articles() {
-		return articleRepository.getArticles();
+	public ResultData articles() {
+		List<Article> articles = articleRepository.getArticles();
+		return ResultData.from("S-1", "Article List", "List<Article>", articles);
 	}
 
 }
