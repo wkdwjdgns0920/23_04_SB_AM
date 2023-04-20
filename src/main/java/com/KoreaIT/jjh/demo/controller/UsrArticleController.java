@@ -114,20 +114,25 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, HttpSession httpSession) {
-		List<Article> articles = articleService.articles();
-		int loginedMemberId = (int)httpSession.getAttribute("loginedMemberId");
+	public String showList(Model model) {
+		List<Article> articles = articleService.getForPrintArticles();
 
 		model.addAttribute("articles", articles);
-		model.addAttribute("loginedMemberId", loginedMemberId);
 
 		return "usr/article/list";
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(Model model, int id) {
+	public String showDetail(HttpSession httpSession, Model model, int id) {
+		boolean isLogined = false;
+		int loginedMemberId = 0;
 
-		Article article = articleService.getArticle(id);
+		if (httpSession.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
+		}
+
+		Article article = articleService.getForPrintArticle(loginedMemberId, id);
 
 		model.addAttribute("article", article);
 
