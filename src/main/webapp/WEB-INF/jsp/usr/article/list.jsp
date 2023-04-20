@@ -25,7 +25,13 @@
 														<td>
 																<a href="../article/detail?id=${article.id}">${article.title}</a>
 														</td>
-														<td>${article.memberId}</td>
+														<td>${article.extra__writer}</td>
+														<td>
+																<a href="/usr/article/doDelete?id${article.id}">삭제</a>
+														</td>
+														<td>
+																<button type="button" onclick="/usr/article/doModify?id${article.id}">수정</button>
+														</td>
 
 												</tr>
 										</c:forEach>
