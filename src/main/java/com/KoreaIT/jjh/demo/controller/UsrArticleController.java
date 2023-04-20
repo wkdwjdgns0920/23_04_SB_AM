@@ -114,10 +114,12 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model) {
+	public String showList(Model model, HttpSession httpSession) {
 		List<Article> articles = articleService.articles();
+		int loginedMemberId = (int)httpSession.getAttribute("loginedMemberId");
 
 		model.addAttribute("articles", articles);
+		model.addAttribute("loginedMemberId", loginedMemberId);
 
 		return "usr/article/list";
 	}
