@@ -3,7 +3,6 @@ package com.KoreaIT.jjh.demo.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.jjh.demo.service.ArticleService;
+import com.KoreaIT.jjh.demo.service.BoardService;
 import com.KoreaIT.jjh.demo.util.Ut;
 import com.KoreaIT.jjh.demo.vo.Article;
+import com.KoreaIT.jjh.demo.vo.Board;
 import com.KoreaIT.jjh.demo.vo.ResultData;
 import com.KoreaIT.jjh.demo.vo.Rq;
 
@@ -22,6 +23,9 @@ public class UsrArticleController {
 
 	@Autowired
 	private ArticleService articleService;
+
+	@Autowired
+	private BoardService boardService;
 
 	@RequestMapping("/usr/article/modify")
 	public String showModify(HttpServletRequest req, Model model, int id) {
@@ -115,9 +119,14 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model) {
+	public String showList(HttpServletRequest req, Model model, int boardId) {
+		Rq rq = (Rq) req.getAttribute("rq");
+
+		Board board = boardService.getBoardById(boardId);
+
 		List<Article> articles = articleService.getForPrintArticles();
 
+		model.addAttribute("board", board);
 		model.addAttribute("articles", articles);
 
 		return "usr/article/list";
