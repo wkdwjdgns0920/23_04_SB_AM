@@ -1,10 +1,10 @@
 package com.KoreaIT.jjh.demo.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -12,6 +12,7 @@ import com.KoreaIT.jjh.demo.service.MemberService;
 import com.KoreaIT.jjh.demo.util.Ut;
 import com.KoreaIT.jjh.demo.vo.Member;
 import com.KoreaIT.jjh.demo.vo.ResultData;
+import com.KoreaIT.jjh.demo.vo.Rq;
 
 @Controller
 public class UsrMemberController {
@@ -61,15 +62,10 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(HttpSession httpSession, String loginId, String loginPw) {
+	public String doLogin(HttpServletRequest req, String loginId, String loginPw) {
+		Rq rq = (Rq) req.getAttribute("rq");
 
-		boolean isLogined = false;
-
-		if (httpSession.getAttribute("loginedMemberId") != null) {
-			isLogined = true;
-		}
-
-		if (isLogined) {
+		if (rq.isLogined()) {
 			return Ut.jsHitoryBack("F-5", "이미 로그인 상태입니다");
 		}
 
@@ -90,28 +86,24 @@ public class UsrMemberController {
 			return Ut.jsHitoryBack("F-4", Ut.f("비밀번호가 일치하지 않습니다"));
 		}
 
-		httpSession.setAttribute("loginedMemberId", member.getId());
+		rq.login(member);
 
 		return Ut.jsReplace("S-1", Ut.f("%s님 환영합니다", member.getName()), "/");
 	}
 
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public ResultData doLogout(HttpSession httpSession) {
+	public String doLogout(HttpServletRequest req) {
 
-		boolean isLogined = false;
+		Rq rq = (Rq) req.getAttribute("rq");
 
-		if (httpSession.getAttribute("loginedMemberId") == null) {
-			isLogined = true;
+		if (!rq.isLogined()) {
+			return Ut.jsHitoryBack("F-1", "이미 로그아웃 상태입니다");
 		}
 
-		if (isLogined) {
-			return ResultData.from("F-1", "이미 로그아웃 상태입니다");
-		}
+		rq.logout();
 
-		httpSession.removeAttribute("loginedMemberId");
-
-		return ResultData.from("S-1", "로그아웃 되었습니다");
+		return Ut.jsReplace("S-1", "로그아웃 되었습니다", "/");
 	}
 
 }
