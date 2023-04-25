@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="${board.code}" />
 <%@ include file="../common/head.jspf"%>
@@ -32,14 +31,23 @@
 								<div class="badge">${article.id}</div>
 							</td>
 							<td>${article.regDate.substring(2,16)}</td>
-							<td><a class="hover:underline"
-								href="../article/detail?id=${article.id}">${article.title}</a></td>
+							<td>
+								<a class="hover:underline" href="../article/detail?id=${article.id}">${article.title}</a>
+							</td>
 							<td>${article.extra__writer}</td>
 
 						</tr>
 					</c:forEach>
 				</tbody>
+
 			</table>
+		</div>
+		<div class="pagination flex justify-center mt-3">
+			<div class="btn-group">
+				<c:forEach begin="1" end="20" var="i">
+					<a class="btn ${param.page == i ? 'btn-active' : '' }" href="?page=${i }">${i }</a>
+				</c:forEach>
+
 			</div>
 		</div>
 	</div>

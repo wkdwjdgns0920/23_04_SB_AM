@@ -10,7 +10,7 @@ import com.KoreaIT.jjh.demo.vo.Article;
 @Mapper
 public interface ArticleRepository {
 
-	public void writeArticle(int memberId, int boardId ,String title, String body);
+	public void writeArticle(int memberId, int boardId, String title, String body);
 
 	@Select("""
 			SELECT *
@@ -30,9 +30,12 @@ public interface ArticleRepository {
 				AND A.boardId = #{boardId}
 			</if>
 			ORDER BY A.id DESC
+			<if test="limitFrom >= 0">
+				LIMIT #{limitFrom}, #{limitTake}
+			</if>
 			</script>
 				""")
-	public List<Article> getForPrintArticles(int boardId);
+	public List<Article> getForPrintArticles(int boardId, int limitFrom, int limitTake);
 
 	@Select("""
 			SELECT *
