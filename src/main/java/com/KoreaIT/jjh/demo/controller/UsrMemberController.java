@@ -56,7 +56,10 @@ public class UsrMemberController {
 	}
 
 	@RequestMapping("/usr/member/login")
-	public String showLogin(HttpSession httpSession) {
+	public String showLogin(HttpServletRequest req) {
+		Rq rq = (Rq) req.getAttribute("rq");
+		rq.jsHitoryBackOnView("이미 로그인 상태입니다");
+		
 		return "usr/member/login";
 	}
 
