@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.jjh.demo.service.ReplyService;
 import com.KoreaIT.jjh.demo.util.Ut;
+import com.KoreaIT.jjh.demo.vo.Reply;
 import com.KoreaIT.jjh.demo.vo.ResultData;
 import com.KoreaIT.jjh.demo.vo.Rq;
 
