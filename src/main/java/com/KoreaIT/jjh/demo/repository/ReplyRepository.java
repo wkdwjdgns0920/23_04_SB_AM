@@ -67,4 +67,17 @@ public interface ReplyRepository {
 			""")
 	Reply getForPrintReply(int id);
 
+	@Update("""
+			<script>
+			UPDATE reply
+			<set>
+				<if test="body != null and body != ''">`body` = #{body},</if>
+				updateDate= NOW()
+			</set>
+			WHERE id = #{id}
+			</script>
+			""")
+
+	void modifyReply(int id, String body);
+
 }
