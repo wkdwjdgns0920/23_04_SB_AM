@@ -26,7 +26,7 @@
 	}
 	$(function() {
 		// 실전코드
-		// 		ArticleDetail__increaseHitCount();
+		// ArticleDetail__increaseHitCount();
 		// 연습코드
 		setTimeout(ArticleDetail__increaseHitCount, 2000);
 	})
