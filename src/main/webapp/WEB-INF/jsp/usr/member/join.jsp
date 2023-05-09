@@ -62,6 +62,7 @@
 		submitJoinFormDone = true;
 		form.submit();
 	}
+	
 	function checkLoginIdDup(el) {
 		$('.checkDup-msg').empty();
 		const form = $(el).closest('form').get(0);
@@ -69,18 +70,20 @@
 			validLoginId = '';
 			return;
 		}
-		
-		if(validLoginId == form.loginId.value){
+		if (validLoginId == form.loginId.value) {
 			return;
 		}
 		$.get('../member/getLoginIdDup', {
 			isAjax : 'Y',
 			loginId : form.loginId.value
 		}, function(data) {
-			$('.checkDup-msg').html('<div class="mt-2">' + data.msg + '</div>')
+			
 			if (data.success) {
+				$('.checkDup-msg').html('<div class="mt-2">' + data.msg + '</div>')
+				$('.logo').css('font-size','4rem');
 				validLoginId = data.data1;
 			} else {
+				$('.checkDup-msg').html('<div class="mt-2 text-red-500">' + data.msg + '</div>')
 				validLoginId = '';
 			}
 		}, 'json');
