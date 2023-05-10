@@ -1,5 +1,7 @@
 package com.KoreaIT.jjh.demo.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.jjh.demo.repository.MemberRepository;
@@ -40,7 +42,7 @@ public class MemberService {
 		return ResultData.from("S-1", "회원가입이 완료되었습니다", "id", id);
 	}
 
-	private Member getMemberByNameAndEmail(String name, String email) {
+	public Member getMemberByNameAndEmail(String name, String email) {
 		return memberRepository.getMemberByNameAndEmail(name, email);
 	}
 

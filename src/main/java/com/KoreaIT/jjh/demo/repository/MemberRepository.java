@@ -1,5 +1,7 @@
 package com.KoreaIT.jjh.demo.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -75,5 +77,14 @@ public interface MemberRepository {
 			</script>
 			""")
 	void modify(int id, String loginPw, String name, String nickname, String cellphoneNum, String email);
+	
+	
+	@Select("""
+			SELECT *
+			FROM `member`
+			WHERE `name` = #{name}
+			AND email = #{email}
+			""")
+	Member getMemberByName(String name,String email);
 
 }
