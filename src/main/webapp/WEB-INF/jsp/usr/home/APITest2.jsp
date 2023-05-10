@@ -15,5 +15,5 @@
 </script>
 
 <%@ include file="../common/head.jspf"%>
-
+	<div>${data }</div>
 <%@ include file="../common/foot.jspf"%>
